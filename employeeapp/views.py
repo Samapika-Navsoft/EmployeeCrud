@@ -46,7 +46,7 @@ class EmployeeView(GenericAPIView):
         return Response(response,http_status)
 
 class EmployeeDetailView(GenericAPIView):
-    parser_classes = [MultiPartParser]
+    # parser_classes = [MultiPartParser]
     serializer_class = EmployeeSerializer
     def get_employee(self, id):
         employee = Employee.objects.filter(id=id).first()
