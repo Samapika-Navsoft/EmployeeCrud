@@ -1,5 +1,4 @@
 '''Test cases for Employee Views'''
-from django.conf import settings
 from django.test import TestCase, Client
 from django.urls import reverse
 from ..models import Employee
@@ -28,6 +27,13 @@ class EmployeeViewTest(TestCase):
 class EmployeeDetailTest(TestCase):
     def setUp(self) -> None:
         self.client = Client()
+        self.employee_created = Employee.objects.create(
+            name = "some name",
+            address = "some where",
+            employee_number = randint(2,200),
+            salary = 20215,
+            date_of_birth = "2022-02-20"
+        )
         self.employee = {
             "name" : "some name",
             "address" : "some where",
@@ -37,11 +43,16 @@ class EmployeeDetailTest(TestCase):
         }   
         return self.employee
     def test_employee_view_get(self):
-        self.url = reverse("employeedetail", args=[2])
+        self.url = reverse("employeedetail", args=[self.employee_created.id])
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
     def test_employee_view_put(self):
+        self.url = reverse("employeedetail", args=[self.employee_created.id])
+        response = self.client.put(self.url, self.employee, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+    def test_employee_view_delete(self):
         self.employee_created = Employee.objects.create(
             name = "some name",
             address = "some where",
@@ -51,5 +62,4 @@ class EmployeeDetailTest(TestCase):
         )
         self.url = reverse("employeedetail", args=[self.employee_created.id])
         response = self.client.delete(self.url, self.employee)
-        print(response.json())
         self.assertEqual(response.status_code, 200)

@@ -10,4 +10,3 @@ class Employee(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     date_of_birth = models.DateTimeField(null=True)
-    profile_picture = models.ImageField(upload_to="media/pictures", null=True)

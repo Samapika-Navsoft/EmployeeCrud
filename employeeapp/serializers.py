@@ -1,5 +1,4 @@
 '''serializer class defined for Employee Model'''
-from requests import request
 from rest_framework import serializers
 from .models import Employee
 
@@ -9,8 +8,11 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         '''meta class for employee serializer'''
         model = Employee
-        fields = ["name", "address", "employee_number", "salary", "date_of_birth", "date_of_birth","created_at", "updated_at", "profile_picture"]
+        fields = ["id","name", "address", "employee_number", "salary", "date_of_birth", "date_of_birth","created_at", "updated_at"]
         extra_kwargs = {
+            "id":{
+                "read_only": True
+            },
             "created_at":{
                 "read_only": True
             },
@@ -19,19 +21,15 @@ class EmployeeSerializer(serializers.ModelSerializer):
             },
             "date_of_birth":{
                 "write_only": True
-            },
-            "profile_picture":{
-                "required": False
-            },
+            }
         }
     def get_birth_date(self, obj):
         if obj.date_of_birth:
             return obj.date_of_birth.strftime("%Y-%m-%d")
 
-class EmployeeUpdateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Employee
-        fields = "__all__"
+
+
+        
         
 
         
