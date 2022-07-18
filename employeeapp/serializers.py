@@ -4,11 +4,11 @@ from .models import Employee
 
 class EmployeeSerializer(serializers.ModelSerializer):
     '''Employee Serializer class'''
-    date_of_birth = serializers.SerializerMethodField("get_birth_date", read_only=True)
+    employee_date_of_birth = serializers.SerializerMethodField("get_birth_date", read_only=True)
     class Meta:
         '''meta class for employee serializer'''
         model = Employee
-        fields = ["id","name", "address", "employee_number", "salary", "date_of_birth", "date_of_birth","created_at", "updated_at"]
+        fields = ["id","name", "address", "employee_number", "salary", "employee_date_of_birth", "date_of_birth","created_at", "updated_at"]
         extra_kwargs = {
             "id":{
                 "read_only": True

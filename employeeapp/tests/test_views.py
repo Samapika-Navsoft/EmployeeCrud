@@ -47,9 +47,15 @@ class EmployeeDetailTest(TestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 
-    def test_employee_view_put(self):
+    def test_employee_view_patch(self):
         self.url = reverse("employeedetail", args=[self.employee_created.id])
         response = self.client.put(self.url, self.employee, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+
+    def test_employee_view_put(self):
+        self.url = reverse("employeedetail", args=[self.employee_created.id])
+        response = self.client.patch(self.url, self.employee, content_type="application/json")
         self.assertEqual(response.status_code, 200)
 
     def test_employee_view_delete(self):
